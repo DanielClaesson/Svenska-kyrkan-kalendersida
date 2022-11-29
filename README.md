@@ -2,18 +2,18 @@
 
 Skapa en kalender som hämtar kommande aktiviteter för en församling/ett pastorat inom Svenska kyrkan. All information hämtas automatiskt från kalender på svenskakyrkan.se via Svenska kyrkans API.
 
-# Använd kalendern på egen server
+## Använd kalendern på egen server
 Har du tillgång till en PHP-server så kan du ladda upp filerna där, det är allt som behövs för att komma igång med en egen kalender.
 
-# Ställ in kalendern för att visa rätt aktiviteter
+### Ställ in kalendern för att visa rätt aktiviteter
 Du behöver en API-nyckel för att hämta kalenderaktivteter. Det kan du skaffa på api.svenskakyrkan.se. Klistra in API-nyckeln på markerat ställe i filen index.php. Där fyller du även i ID-numret för den församling/pastorat/organisation inom Svenska kyrkan som du vill lista kalenderhändelser för.
 
 Du kan slutligen ändra rubriken på webbsidan genom att fylla i valfri text vid "$webbsida_rubrik".
 
-# Hitta organisations-ID
+## Hitta organisations-ID
 Du kanske inte har koll på ID-numret för organisationen? Ett sätt som jag har använt för att hitta vårt ID var att gå in på Botkyrka församlings hemsida (på svenskakyrkan.se) och klicka på kalender-knappen nedanför den stora sökrutan uppe till höger. Sedan tittar jag i adressfältet i webbläsaren och kopierar siffrorna som står efter "&orgId=".
 
-# Lägg in kalendern i Playipp
+## Lägg in kalendern i Playipp
 Många församlingar har digitala skärmar med mjukvara från Playipp. Kalendern kan enkelt läggas in på dessa skärmar.
 
 1. Gå till som vanligt först Publicera och välj den skärm du vill använda. Klicka på den modul/sektion av skärmen där du vill ha kalendern och välj sedan Lägg till.
