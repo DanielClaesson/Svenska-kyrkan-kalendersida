@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-/* Svenska kyrkans teckensnitt Foundry Sterling */
+/* Importera Svenska kyrkans teckensnitt Foundry Sterling */
 @font-face {
 	font-family: 'Light';
 	src: url('fonts/light.ttf');
@@ -29,31 +29,31 @@ div {
 }
 
 body {
-width: 100vw;
-height: 100vh;
-position: relative;
-overflow: hidden;
-margin: 0;
-padding: 0;
-background: #fff;
-color: #000;
-font-family: 'Book', arial, sans-serif;
-font-size: 18px;
-line-height: 110%;
-text-align: left;
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	background: #fff;
+	color: #000;
+	font-family: 'Book', arial, sans-serif;
+	font-size: 18px;
+	line-height: 110%;
+	text-align: left;
 }
 
 #header {
-margin: 0;
-padding: 15px;
-background: #d51317;
-color: #fff;
+	margin: 0;
+	padding: 15px;
+	background: #d51317;
+	color: #fff;
 }
 
 #header h1 {
-margin: 0;
-font-size: 33px;
-font-weight: normal;
+	margin: 0;
+	font-size: 33px;
+	font-weight: normal;
 }
 
 #wrapper {
@@ -89,7 +89,6 @@ font-weight: normal;
 }
 
 .infotext {
-	/*color: #d51317;*/
 	font-family: 'Book-italic', arial, sans-serif;
 	font-size: 16px;
 }
