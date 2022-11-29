@@ -1,4 +1,4 @@
-# Webbsida som visar komamnde kalenderaktiviteter för en församling/ett pastorat inom Svenska kyrkan
+# Webbsida med kommande kalenderaktiviteter för valfi församling/pastorat inom Svenska kyrkan
 
 Skapa en kalender som hämtar kommande aktiviteter för en församling/ett pastorat inom Svenska kyrkan. All information hämtas automatiskt från kalender på svenskakyrkan.se via Svenska kyrkans API.
 
