@@ -1,6 +1,13 @@
 <?php
 	/* ÄNDRA VÄRDENA NEDANFÖR DENNA RAD */
-	$api_nyckel = 'LÄGG IN DIN API-NYCKEL HÄR'; //Skapa ett konto på https://api.svenskakyrkan.se/ och generera en API-nyckel som du klistar in på denna rad
+	$api_nyckel = 'abc123'; //Lägg in en api-nyckel här, alternativt skapa en fil bredvid denna som heter "api" och lägg in nyckeln i den filen.
+	
+	if (file_exists("api")){
+		$file = fopen("api", "r") or die("Kunde inte hitta api-nyckelfil");
+		$api_nyckel = fgets($file);
+		fclose($file)
+	}
+
 	$organisations_id = '20271'; //Fyll i enhets-ID för den församling/det pastorat som du vill hämta kalenderhändelser för
 	$organisation_namn = 'Svenska kyrkan Härnösand'; //Skriv in namnet på församlingen/pastoratet som kalenden gäller för
 	$webbsida_rubrik = 'Svenska kyrkan Härnösand'; //Rubriken längst upp på kalendersidan
