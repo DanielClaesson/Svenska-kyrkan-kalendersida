@@ -1,9 +1,9 @@
 <?php
 	/* ÄNDRA VÄRDENA NEDANFÖR DENNA RAD */
-	$api_nyckel = 'LÄGG IN DIN API-NYCKEL HÄR'; //Skapa ett konto på https://api.svenskakyrkan.se/ och generera en API-nyckel som du klistar in på denna rad
-	$organisations_id = 'ENHETS-ID HÄR'; //Fyll i enhets-ID för den församling/det pastorat som du vill hämta kalenderhändelser för
-	$organisation_namn = 'NAMN HÄR'; //Skriv in namnet på församlingen/pastoratet som kalenden gäller för
-	$webbsida_rubrik = 'RUBRIK HÄR'; //Rubriken längst upp på kalendersidan
+	$api_nyckel = '295bfbc3-c865-4a88-a67b-cc0eccb9ebd1'; //Skapa ett konto på https://api.svenskakyrkan.se/ och generera en API-nyckel som du klistar in på denna rad
+	$organisations_id = '7681'; //Fyll i enhets-ID för den församling/det pastorat som du vill hämta kalenderhändelser för
+	$organisation_namn = 'Svenska kyrkan'; //Skriv in namnet på församlingen/pastoratet som kalenden gäller för
+	$webbsida_rubrik = 'Aktuellt i kyrkan'; //Rubriken längst upp på kalendersidan
 	
 	$max_handelser = '25'; //Max antal händelser att visa i kalendern
 	/* ÄNDRA INGET EFTER DENNA RAD */
@@ -75,87 +75,88 @@
 				$plats = $svk_kalender_array['value'][$ladda_aktivitet]['PlaceDescription'];
 				$raderad = $svk_kalender_array['value'][$ladda_aktivitet]['Deleted'];
 				
-				//Om det inte redan har lagts till max antal aktiviteter i kalendern
-				if ($antal_tillagda < $max_handelser) {
-				
-					//Om aktiviteten INTE är raderad
-					if (empty($raderad)) {
+				//Om det inte redan har lagts till max antal aktiviteter i kalendern och denna aktivitet INTE är raderad
+				if ($antal_tillagda < $max_handelser && empty($raderad)) {
 					
-						//Bara datum i start- och sluttiderna
-						$startdatum = substr($startdatum, 0, strpos($startdatum, 'T'));
-						$slutdatum = substr($slutdatum, 0, strpos($slutdatum, 'T'));
-						//Enbart siffror i datumen
-						$startdatum = str_replace(array('-'), array(''), $startdatum);
-						$slutdatum = str_replace(array('-'), array(''), $slutdatum);
-						//Byt kolon mot punkt i starttiden
-						$starttid = str_replace(array(':'), array('.'), $starttid);
+					//Bara datum i start- och sluttiderna
+					$startdatum = substr($startdatum, 0, strpos($startdatum, 'T'));
+					$slutdatum = substr($slutdatum, 0, strpos($slutdatum, 'T'));
+					//Enbart siffror i datumen
+					$startdatum = str_replace(array('-'), array(''), $startdatum);
+					$slutdatum = str_replace(array('-'), array(''), $slutdatum);
+					//Byt kolon mot punkt i starttiden
+					$starttid = str_replace(array(':', ' '), array('.', ''), $starttid);
+					
+					//Om det finns en sluttid
+					if (strpos($starttid, '-') !== false) {
+						$starttid_ratt = strtok($starttid, '-');
+						$sluttid = str_replace(array($starttid_ratt.'-'), array(''), $starttid);
+						$sluta_visas = $sluttid;
+						$sluttid = '-'.$sluttid;
+						$starttid = $starttid_ratt;
+					}
+					else {
+						$sluttid = '';
+						$sluta_visas = date($starttid, strtotime('+2 hours'));
+					}
+					
+					//Om aktiviteten inte är passerad
+					if ($slutdatum > $aktuellt_datum || ($slutdatum == $aktuellt_datum && $sluta_visas >= $aktuell_tid)) {
 						
-						//Om det finns en sluttid
-						if (strpos($starttid, '-') !== false) {
-							$starttid_ratt = strtok($starttid, ' - ');
-							$sluttid = str_replace(array($starttid_ratt.' - '), array(''), $starttid);
-							$sluta_visas = $sluttid;
-							$sluttid = '-'.$sluttid;
-							$starttid = $starttid_ratt;
+						//Ta bort rum (eller annat efter ett kommatecken) i plats
+						if (strpos($plats, ',') !== false) {
+							$plats = substr($plats, 0, strpos($plats, ','));
+						}
+						
+						//Lägg till ett kommatecken om det finns en plats
+						if (!empty($plats) && $plats !== '') {
+							$plats = ', '.$plats;
+						}
+						
+						//Om det finns en beskrivning
+						if (!empty($beskrivning)) {
+							//Ingen HTML i beskrivningen
+							$beskrivning = str_ireplace(array('<B>', '</B>', '<BR /><BR />', '<BR />', '<BR>', '. . ', '.. '), array('', '', '', '. ', '. ', '. ', '. '), $beskrivning);
+							$beskrivning = preg_replace('#<a.*?>.*?</a>#i', '', $beskrivning);
 						}
 						else {
-							$sluttid = '';
-							$sluta_visas = date($starttid, strtotime('+2 hours'));
+							$beskrivning = '';
+						}
+						//Lägg till infotext och ev. beskrivning
+						$beskrivning = '<span class="infotext"> '.$medverkande.' '.$beskrivning.'</span>';
+						
+						//Bättre format på datumet
+						$startdatum_visning = date('l j M',strtotime($startdatum));
+						
+						//Om det är dagens datum
+						if ($startdatum == $aktuellt_datum) {
+							$startdatum_visning = 'I dag '.$startdatum_visning;
+						}
+						//Om det är morgondagens datum
+						elseif ($startdatum == $datum_imorgon) {
+							$startdatum_visning = 'I morgon '.$startdatum_visning;
 						}
 						
-						//Om aktiviteten inte är passerad
-						if ($slutdatum > $aktuellt_datum || ($slutdatum == $aktuellt_datum && $sluta_visas >= $aktuell_tid)) {
+						//Översätt veckodagar till svenska
+						$startdatum_visning = str_ireplace(array('Monday','Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), array('Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag','Söndag'),$startdatum_visning);
+									
+						//Översätt månader till svenska
+						$startdatum_visning = str_ireplace(array('Jan','Feb','Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'), array('januari','februari','mars','april','maj','juni','juli', 'augusti', 'september', 'oktober', 'november', 'december'),$startdatum_visning);
+						
+						//Om det är den första händelsen detta datum
+						if (!in_Array($startdatum, $datumArray)) {
 							
-							//Ta bort rum (eller annat efter ett kommatecken) i plats
-							if (strpos($plats, ',') !== false) {
-								$plats = substr($plats, 0, strpos($plats, ','));
-							}
+							//Lägg till en datumrubrik
+							$kalender .= '<div class="datum"><h2>'.$startdatum_visning.'</h2></div>'."\n";
 							
-							//Om det finns en beskrivning
-							if (!empty($beskrivning)) {
-								//Ingen HTML i beskrivningen
-								$beskrivning = str_ireplace(array('<B>', '</B>', '<BR /><BR />', '<BR />', '<BR>', '. . ', '.. '), array('', '', '', '. ', '. ', '. ', '. '), $beskrivning);
-								$beskrivning = preg_replace('#<a.*?>.*?</a>#i', '', $beskrivning);
-							}
-							else {
-								$beskrivning = '';
-							}
-							//Lägg till infotext och ev. beskrivning
-							$beskrivning = '<span class="infotext"> '.$medverkande.' '.$beskrivning.'</span>';
+							//Lägg in datumet i arrayen
+							$datumArray[] = $startdatum;
 							
-							//Bättre format på datumet
-							$startdatum_visning = date('l j M',strtotime($startdatum));
-							
-							//Om det är dagens datum
-							if ($startdatum == $aktuellt_datum) {
-								$startdatum_visning = 'I dag '.$startdatum_visning;
-							}
-							//Om det är morgondagens datum
-							elseif ($startdatum == $datum_imorgon) {
-								$startdatum_visning = 'I morgon '.$startdatum_visning;
-							}
-							
-							//Översätt veckodagar till svenska
-							$startdatum_visning = str_ireplace(array('Monday','Tuesday','Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), array('Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag','Söndag'),$startdatum_visning);
-										
-							//Översätt månader till svenska
-							$startdatum_visning = str_ireplace(array('Jan','Feb','Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'), array('januari','februari','mars','april','maj','juni','juli', 'augusti', 'september', 'oktober', 'november', 'december'),$startdatum_visning);
-							
-							//Om det är den första händelsen detta datum
-							if (!in_Array($startdatum, $datumArray)) {
-								
-								//Lägg till en datumrubrik
-								$kalender .= '<div class="datum"><h2>'.$startdatum_visning.'</h2></div>'."\n";
-								
-								//Lägg in datumet i arrayen
-								$datumArray[] = $startdatum;
-								
-							}
-							//Lägg till händelsen i kalendern
-							$kalender .= '<div class="handelse"><p><span class="fet">'.$starttid.$sluttid.' '.$titel.'</span>, '.$plats.$beskrivning.'</p></div>'."\n";
-							
-							$antal_tillagda++;
 						}
+						//Lägg till händelsen i kalendern
+						$kalender .= '<div class="handelse"><p><span class="fet">'.$starttid.$sluttid.' '.$titel.'</span>'.$plats.$beskrivning.'</p></div>'."\n";
+						
+						$antal_tillagda++;
 					}
 				}
 			}
@@ -167,20 +168,34 @@
 	}
 ?>
 <html>
+
 <head>
+	
 	<meta charset="utf-8">
+	
 	<title>Kalender för <?php echo $organisation_namn; ?></title>
+	
 	<link rel="stylesheet" type="text/css" href="/kalendersida/style.css" media="all" />
+	
 	<!-- fix för mobiler -->
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+	
 </head>
+
 <body>
+	
 	<div id="header">
 		<h1><?php echo $webbsida_rubrik; ?></h1>
 	</div>
+	
 	<div id="wrapper">
+		
 		<?php echo $kalender; ?>
+		
 	</div>
+	
 	<div id="gradient"></div>
+	
 </body>
+
 </html>
