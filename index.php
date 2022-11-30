@@ -12,7 +12,7 @@
         $organisation_namn = 'Svenska kyrkan Härnösand'; //Skriv in namnet på församlingen/pastoratet som kalenden gäller för
         $webbsida_rubrik = 'Svenska kyrkan Härnösand'; //Rubriken längst upp på kalendersidan
 
-        $max_handelser = '25'; //Max antal händelser att visa i kalendern
+        $max_handelser = '50'; //Max antal händelser att visa i kalendern
         /* ÄNDRA INGET EFTER DENNA RAD */
 
 
@@ -23,7 +23,13 @@
                 $organisations_id = preg_replace("/[^0-9,]/", "", $organisations_id);
         }
 
-        $location_id = ''; // Härnösands domkyrka = 5dab016f-18f3-4973-92d8-69779653a1ef
+        /*
+
+                Härnösands domkyrka = 5dab016f-18f3-4973-92d8-69779653a1ef
+                Säbrå kyrka = 26a876d9-3cf6-4a8b-8e11-7c78eaaef4d9
+
+        */
+        $location_id = '';
         $location_name = '';
         if (isset($_GET['locationID']) && $_GET['locationID'] !== '') {
                 $location_id = $_GET['locationID'];
@@ -87,8 +93,8 @@
                                 $titel = $svk_kalender_array['value'][$ladda_aktivitet]['Title'];
                                 $beskrivning = $svk_kalender_array['value'][$ladda_aktivitet]['Description'];
                                 $plats = $svk_kalender_array['value'][$ladda_aktivitet]['PlaceDescription'];
-                                $location_name = $plats;
                                 $plats_id = '';
+
                                 if (isset($svk_kalender_array['value'][$ladda_aktivitet]['Place']['Id'])) {
                                         $plats_id = $svk_kalender_array['value'][$ladda_aktivitet]['Place']['Id'];
                                 }
@@ -97,6 +103,9 @@
                                 //Om vi skickat med ett locationID i GET, hoppa över varje aktivitet som inte stämmer in på ID:t
                                 if ($location_id !== '' && $location_id != $plats_id) {
                                         continue;
+                                }
+                                else {
+                                        $location_name = $plats;
                                 }
 
                                 //Om det inte redan har lagts till max antal aktiviteter i kalendern och denna aktivitet INTE är raderad
