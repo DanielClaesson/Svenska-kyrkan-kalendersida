@@ -63,9 +63,12 @@
 
         $antal_tillagda = '0';
 
-
         //Länk till kalenderdatan
         $url = 'https://api.svenskakyrkan.se/calendarsearch/v4/SearchByParent?apikey='.$api_nyckel.'&orgid='.$organisations_id.'&$orderby=StartTime';
+        if ($location_id !== '') { //Låt API:t filtrera location_id om vi filtrerar på ett sådant.
+                $url .= '&$filter=Place/Id%20eq%20%27'.$location_id.'%27';
+        }
+
         $kalender_api_lank = file_get_contents($url);
 
         //Om API-länken inte fungerar
@@ -93,18 +96,9 @@
                                 $titel = $svk_kalender_array['value'][$ladda_aktivitet]['Title'];
                                 $beskrivning = $svk_kalender_array['value'][$ladda_aktivitet]['Description'];
                                 $plats = $svk_kalender_array['value'][$ladda_aktivitet]['PlaceDescription'];
-                                $plats_id = '';
-
-                                if (isset($svk_kalender_array['value'][$ladda_aktivitet]['Place']['Id'])) {
-                                        $plats_id = $svk_kalender_array['value'][$ladda_aktivitet]['Place']['Id'];
-                                }
                                 $raderad = $svk_kalender_array['value'][$ladda_aktivitet]['Deleted'];
-                                
-                                //Om vi skickat med ett locationID i GET, hoppa över varje aktivitet som inte stämmer in på ID:t
-                                if ($location_id !== '' && $location_id != $plats_id) {
-                                        continue;
-                                }
-                                else {
+
+                                if ($location_id !== '') {
                                         $location_name = $plats;
                                 }
 
