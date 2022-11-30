@@ -1,10 +1,10 @@
 <?php
 	/* ÄNDRA VÄRDENA NEDANFÖR DENNA RAD */
-	$api_nyckel = '295bfbc3-c865-4a88-a67b-cc0eccb9ebd1'; //Skapa ett konto på https://api.svenskakyrkan.se/ och generera en API-nyckel som du klistar in på denna rad
-	$organisations_id = '7681'; //Fyll i enhets-ID för den församling/det pastorat som du vill hämta kalenderhändelser för
-	$organisation_namn = 'Svenska kyrkan'; //Skriv in namnet på församlingen/pastoratet som kalenden gäller för
-	$webbsida_rubrik = 'Aktuellt i kyrkan'; //Rubriken längst upp på kalendersidan
-	
+	$api_nyckel = 'LÄGG IN DIN API-NYCKEL HÄR'; //Skapa ett konto på https://api.svenskakyrkan.se/ och generera en API-nyckel som du klistar in på denna rad
+	$organisations_id = 'ENHETS-ID HÄR'; //Fyll i enhets-ID för den församling/det pastorat som du vill hämta kalenderhändelser för
+	$organisation_namn = 'NAMN HÄR'; //Skriv in namnet på församlingen/pastoratet som kalenden gäller för
+	$webbsida_rubrik = 'RUBRIK HÄR'; //Rubriken längst upp på kalendersidan
+
 	$max_handelser = '25'; //Max antal händelser att visa i kalendern
 	/* ÄNDRA INGET EFTER DENNA RAD */
 	
