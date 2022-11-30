@@ -24,6 +24,7 @@
         }
 
         $location_id = ''; // Härnösands domkyrka = 5dab016f-18f3-4973-92d8-69779653a1ef
+        $location_name = '';
         if (isset($_GET['locationID']) && $_GET['locationID'] !== '') {
                 $location_id = $_GET['locationID'];
         }
@@ -86,7 +87,11 @@
                                 $titel = $svk_kalender_array['value'][$ladda_aktivitet]['Title'];
                                 $beskrivning = $svk_kalender_array['value'][$ladda_aktivitet]['Description'];
                                 $plats = $svk_kalender_array['value'][$ladda_aktivitet]['PlaceDescription'];
-                                $plats_id = $svk_kalender_array['value'][$ladda_aktivitet]['Place']['Id'];
+                                $location_name = $plats;
+                                $plats_id = '';
+                                if (isset($svk_kalender_array['value'][$ladda_aktivitet]['Place']['Id'])) {
+                                        $plats_id = $svk_kalender_array['value'][$ladda_aktivitet]['Place']['Id'];
+                                }
                                 $raderad = $svk_kalender_array['value'][$ladda_aktivitet]['Deleted'];
                                 
                                 //Om vi skickat med ett locationID i GET, hoppa över varje aktivitet som inte stämmer in på ID:t
@@ -127,8 +132,8 @@
                                                         $plats = substr($plats, 0, strpos($plats, ','));
                                                 }
 
-                                                //Lägg till ett kommatecken om det finns en plats
-                                                if (!empty($plats) && $plats !== '') {
+                                                //Lägg till ett kommatecken om det finns en plats och att vi inte filtrerar på platsID
+                                                if (($location_id == '') && (!empty($plats) && $plats !== '')) {
                                                         $plats = ', '.$plats;
                                                 }
 
@@ -173,7 +178,12 @@
 
                                                 }
                                                 //Lägg till händelsen i kalendern
-                                                $kalender .= '<div class="handelse"><p><span class="fet">'.$starttid.$sluttid.' '.$titel.'</span>'.$plats.$beskrivning.'</p></div>'."\n";
+                                                $line = '<div class="handelse"><p><span class="fet">'.$starttid.$sluttid.' '.$titel.'</span>';
+                                                if ($location_id == '') {
+                                                        $line .= $plats;
+                                                }
+                                                $line .= $beskrivning.'</p></div>'."\n";
+                                                $kalender .= $line;
 
                                                 $antal_tillagda++;
                                         }
@@ -201,7 +211,14 @@
 	<body>
 
 			<div id="header">
-					<h1><?php echo $webbsida_rubrik; ?></h1>
+					<?php 
+                                        
+                                        echo('<h1>'.$webbsida_rubrik.'</h1>');
+                                        if ($location_id !== '') {
+                                                echo('<h1 class="location">'.$location_name.'</h1>');
+                                        }
+
+                                        ?>
 			</div>
 
 			<div id="wrapper">

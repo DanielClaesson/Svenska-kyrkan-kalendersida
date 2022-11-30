@@ -45,15 +45,23 @@ body {
 
 #header {
 	margin: 0;
-	padding: 15px;
+	padding: 0;
 	background: #d51317;
 	color: #fff;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 #header h1 {
-	margin: 0;
+	margin: 10px;
+	padding: 15px;
 	font-size: 33px;
 	font-weight: normal;
+	display: block;
+}
+
+#header h1.location {
+	margin-left: auto;
 }
 
 #wrapper {
