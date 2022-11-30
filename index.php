@@ -2,7 +2,7 @@
         /* ÄNDRA VÄRDENA NEDANFÖR DENNA RAD */
         $api_nyckel = 'abc123'; //Lägg in en api-nyckel här, alternativt skapa en fil bredvid denna som heter "api" och lägg in nyckeln i den filen.
 
-        if (file_exists('api')){
+        if (file_exists('api')) {
                 $file = fopen('api', 'r') or die('Kunde inte öppna api-nyckelfil');
                 $api_nyckel = trim(fgets($file));
                 fclose($file);
@@ -17,10 +17,15 @@
 
 
         //Om det finns ett organisations-ID i URL-en
-        if (isset ($_GET['organisationsid']) && $_GET['organisationsid'] !== '') {
-                $organisations_id = $_GET['organisationsid'];
+        if (isset ($_GET['orgID']) && $_GET['orgID'] !== '') {
+                $organisations_id = $_GET['orgID'];
                 //Ta bort allt förutom siffror och kommatecken från ID:et
-                $organisations_id =preg_replace("/[^0-9,]/", "", $organisations_id);
+                $organisations_id = preg_replace("/[^0-9,]/", "", $organisations_id);
+        }
+
+        $location_id = ''; // Härnösands domkyrka = 5dab016f-18f3-4973-92d8-69779653a1ef
+        if (isset($_GET['locationID']) && $_GET['locationID'] !== '') {
+                $location_id = $_GET['locationID'];
         }
 
         //Börja med att starta en session
@@ -81,7 +86,13 @@
                                 $titel = $svk_kalender_array['value'][$ladda_aktivitet]['Title'];
                                 $beskrivning = $svk_kalender_array['value'][$ladda_aktivitet]['Description'];
                                 $plats = $svk_kalender_array['value'][$ladda_aktivitet]['PlaceDescription'];
+                                $plats_id = $svk_kalender_array['value'][$ladda_aktivitet]['Place']['Id'];
                                 $raderad = $svk_kalender_array['value'][$ladda_aktivitet]['Deleted'];
+                                
+                                //Om vi skickat med ett locationID i GET, hoppa över varje aktivitet som inte stämmer in på ID:t
+                                if ($location_id !== '' && $location_id != $plats_id) {
+                                        continue;
+                                }
 
                                 //Om det inte redan har lagts till max antal aktiviteter i kalendern och denna aktivitet INTE är raderad
                                 if ($antal_tillagda < $max_handelser && empty($raderad)) {
