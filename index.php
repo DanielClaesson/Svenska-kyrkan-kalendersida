@@ -1,9 +1,9 @@
 <?php
 	/* ÄNDRA VÄRDENA NEDANFÖR DENNA RAD */
 	$api_nyckel = 'LÄGG IN DIN API-NYCKEL HÄR'; //Skapa ett konto på https://api.svenskakyrkan.se/ och generera en API-nyckel som du klistar in på denna rad
-	$organisations_id = 'ENHETS-ID HÄR'; //Fyll i enhets-ID för den församling/det pastorat som du vill hämta kalenderhändelser för
-	$organisation_namn = 'NAMN HÄR'; //Skriv in namnet på församlingen/pastoratet som kalenden gäller för
-	$webbsida_rubrik = 'RUBRIK HÄR'; //Rubriken längst upp på kalendersidan
+	$organisations_id = '20271'; //Fyll i enhets-ID för den församling/det pastorat som du vill hämta kalenderhändelser för
+	$organisation_namn = 'Svenska kyrkan Härnösand'; //Skriv in namnet på församlingen/pastoratet som kalenden gäller för
+	$webbsida_rubrik = 'Svenska kyrkan Härnösand'; //Rubriken längst upp på kalendersidan
 
 	$max_handelser = '25'; //Max antal händelser att visa i kalendern
 	/* ÄNDRA INGET EFTER DENNA RAD */
@@ -175,7 +175,7 @@
 	
 	<title>Kalender för <?php echo $organisation_namn; ?></title>
 	
-	<link rel="stylesheet" type="text/css" href="/kalendersida/style.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="/style.css" media="all" />
 	
 	<!-- fix för mobiler -->
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
