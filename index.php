@@ -1,20 +1,38 @@
 <?php
-        /* ÄNDRA VÄRDENA NEDANFÖR DENNA RAD */
-        $api_nyckel = 'abc123'; //Lägg in en api-nyckel här, alternativt skapa en fil bredvid denna som heter "api" och lägg in nyckeln i den filen.
+        $api_nyckel = '';
 
+        // Lägg api-nyckeln som text i en fil du döper till api och lägger jämte index.php
+        // OBS VIKTIGT! Se till i webbserverns inställningar att filen inte exponeras på internet! (.htaccess m.m.)
         if (file_exists('api')) {
                 $file = fopen('api', 'r') or die('Kunde inte öppna api-nyckelfil');
                 $api_nyckel = trim(fgets($file));
                 fclose($file);
         }
+        else { //Finns ingen api-fil behöver du lägga api-nyckeln som get parameter i länken, ?api=abc123
+                if (isset($_GET['api'] && $_GET['api'] !== '')) {
+                        $api_nyckel = $_GET['api'];
+                }
+                else {
+                        die('Ingen api-nyckel hittad!');
+                }
+        }
 
-        $organisations_id = '20271'; //Fyll i enhets-ID för den församling/det pastorat som du vill hämta kalenderhändelser för
-        $organisation_namn = 'Svenska kyrkan Härnösand'; //Skriv in namnet på församlingen/pastoratet som kalenden gäller för
-        $webbsida_rubrik = 'Svenska kyrkan Härnösand'; //Rubriken längst upp på kalendersidan
-
+        $organisations_id = '20271'; //Default organisations-ID
+        $organisation_namn = 'Svenska kyrkan'; //Default organisation
+        $webbsida_rubrik = 'Svenska kyrkan'; //Default rubrik
         $max_handelser = '50'; //Max antal händelser att visa i kalendern
-        /* ÄNDRA INGET EFTER DENNA RAD */
 
+        $location_id = '';
+        $location_name = '';
+
+        $colors = [
+                'kyrkröd' => '#cd0014',
+                'kyrkblå' => '#006fb9',
+                'kyrkgrön' => '#6b9531',
+                'kyrklila' => '#522583',
+                'kyrkgul' => '#f59c00',
+        ];
+        $color = $colors['kyrkröd'];
 
         //Om det finns ett organisations-ID i URL-en
         if (isset ($_GET['orgID']) && $_GET['orgID'] !== '') {
@@ -23,16 +41,32 @@
                 $organisations_id = preg_replace("/[^0-9,]/", "", $organisations_id);
         }
 
+        //Möjlighet att filtrera aktiviteter per locationID
         /*
-
                 Härnösands domkyrka = 5dab016f-18f3-4973-92d8-69779653a1ef
                 Säbrå kyrka = 26a876d9-3cf6-4a8b-8e11-7c78eaaef4d9
-
         */
-        $location_id = '';
-        $location_name = '';
         if (isset($_GET['locationID']) && $_GET['locationID'] !== '') {
                 $location_id = $_GET['locationID'];
+        }
+
+        //Möjlighet att sätta Title via parameter ?orgName=Svenska kyrkan Härnösand
+        if (isset($_GET['orgName']) && $_GET['orgName'] !== '') {
+                $organisation_namn = $_GET['orgName'];
+        }
+
+        //Möjlighet att sätta kalenderrubriken via parameter ?header=Svenska kyrkan Härnösand
+        if (isset($_GET['header']) && $_GET['header'] !== '') {
+                $webbsida_rubrik = $_GET['header'];
+        }
+
+        if (isset($_GET['color']) && $_GET['color'] !== '')
+        {
+                try {
+                        $color = $colors[$_GET['color']];
+                } catch (Exception $e) {
+                        $color = $colors['kyrkröd'];
+                }
         }
 
         //Börja med att starta en session
@@ -210,6 +244,19 @@
 
 			<!-- fix för mobiler -->
 		<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
+                <style>
+                        #header {
+                                <?php 
+                                echo("background: ".$color.";");
+                                ?>
+                        }
+
+                        .datum {
+                                <?php 
+                                echo("color: ".$color.";");
+                                ?>
+                        }
+                </style>
 	</head>
 	<body>
 
