@@ -30,7 +30,7 @@
                 'kyrkblå' => '#006fb9',
                 'kyrkgrön' => '#6b9531',
                 'kyrklila' => '#522583',
-                'kyrkgul' => '#f59c00',
+                'kyrkgul' => '#f59c00'
         ];
         $color = $colors['kyrkröd'];
 
