@@ -9,7 +9,7 @@
                 fclose($file);
         }
         else { //Finns ingen api-fil behöver du lägga api-nyckeln som get parameter i länken, ?api=abc123
-                if (isset($_GET['api'] && $_GET['api'] !== '')) {
+                if (isset($_GET['api']) && $_GET['api'] !== '') {
                         $api_nyckel = $_GET['api'];
                 }
                 else {
