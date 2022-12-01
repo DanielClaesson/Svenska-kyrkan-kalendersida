@@ -14,6 +14,8 @@ API-nyckeln kan du ange på två sätt.
 
 Antingen genom att du placerar en fil som heter ``api`` bredvid filen index.php. I filen klistrar du in din api-nyckel. Enklast är att du gör en textfil, klistrar in nyckeln, sparar och sedan tar bort filändelsen (.txt).
 
+**Viktigt!** - Se till att filen api inte går att komma åt från internet, exempelvis genom att undanta den i .htaccess-filen eller på annat sätt skydda den.
+
 Det andra sättet är att skicka med api-nyckeln som parametern ``api=`` till länken till sidan, se exempel längre ned.
 
 ### Organisations-ID
