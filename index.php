@@ -53,7 +53,7 @@
                 'ljusastkyrkblå' => '#bee2e9'
                 
         ];
-        $color = $colors['mörkkyrkröd'];
+        $color = $colors['kyrkröd'];
 
         //Om det finns ett organisations-ID i URL-en
         if (isset ($_GET['orgID']) && $_GET['orgID'] !== '') {
@@ -86,7 +86,7 @@
                 try {
                         $color = $colors[$_GET['color']];
                 } catch (Exception $e) {
-                        $color = $colors['mörkkyrkröd'];
+                        $color = $colors['kyrkröd'];
                 }
         }
 
