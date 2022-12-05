@@ -25,14 +25,35 @@
         $location_id = '';
         $location_name = '';
 
+        // Färger hämtade från Svenska kyrkans grafiska profil
+        // https://www.svenskakyrkan.se/grafiskprofil
         $colors = [
-                'kyrkröd' => '#cd0014',
-                'kyrkblå' => '#006fb9',
+                'mörkkyrkröd' => '#91160f',
+                'mörkkyrklila' => '#522583',
+                'mörkkyrkgrön' => '#4a6a21',
+                'mörkkyrkgul' => '#f59c00',
+                'mörkkyrkblå' => '#005884',
+
+                'kyrkröd' => '#d51317',
+                'kyrklila' => '#a71680',
                 'kyrkgrön' => '#6b9531',
-                'kyrklila' => '#522583',
-                'kyrkgul' => '#f59c00'
+                'kyrkgul' => '#fdc300',
+                'kyrkblå' => '#006fb9',
+
+                'ljuskyrkröd' => '#ed6d91',
+                'ljuskyrklila' => '#bb71ac',
+                'ljuskyrkgrön' => '#afca0b',
+                'ljuskyrkgul' => '#ffdf43',
+                'ljuskyrkblå' => '#63c3d1',
+
+                'ljusastkyrkröd' => '#f5b3bd',
+                'ljusastkyrklila' => '#d1bcdc',
+                'ljusastkyrkgrön' => '#dddf4b',
+                'ljusastkyrkgul' => '#ffe37e',
+                'ljusastkyrkblå' => '#bee2e9'
+                
         ];
-        $color = $colors['kyrkröd'];
+        $color = $colors['mörkkyrkröd'];
 
         //Om det finns ett organisations-ID i URL-en
         if (isset ($_GET['orgID']) && $_GET['orgID'] !== '') {
@@ -65,7 +86,7 @@
                 try {
                         $color = $colors[$_GET['color']];
                 } catch (Exception $e) {
-                        $color = $colors['kyrkröd'];
+                        $color = $colors['mörkkyrkröd'];
                 }
         }
 
