@@ -14,6 +14,8 @@ API-nyckeln kan du ange på två sätt.
 
 Antingen genom att du placerar en fil som heter ``api`` bredvid filen index.php. I filen klistrar du in din api-nyckel. Enklast är att du gör en textfil, klistrar in nyckeln, sparar och sedan tar bort filändelsen (.txt).
 
+**Viktigt!** - Se till att filen api inte går att komma åt från internet, exempelvis genom att undanta den i .htaccess-filen eller på annat sätt skydda den.
+
 Det andra sättet är att skicka med api-nyckeln som parametern ``api=`` till länken till sidan, se exempel längre ned.
 
 ### Organisations-ID
@@ -40,11 +42,29 @@ Själva titeln i webbläsaren visar ``Kalender för [Svenska kyrkan]`` som stand
 ### Färg
 Som standard används den mörkröda färgen från Svenska kyrkans grafiska profil, men du kan ändra via parametern ``color=`` till andra färger enligt listan nedan:
 
-    'kyrkröd' => '#cd0014',
-    'kyrkblå' => '#006fb9',
+    'mörkkyrkröd' => '#91160f',
+    'mörkkyrklila' => '#522583',
+    'mörkkyrkgrön' => '#4a6a21',
+    'mörkkyrkgul' => '#f59c00',
+    'mörkkyrkblå' => '#005884',
+
+    'kyrkröd' => '#d51317',
+    'kyrklila' => '#a71680',
     'kyrkgrön' => '#6b9531',
-    'kyrklila' => '#522583',
-    'kyrkgul' => '#f59c00'
+    'kyrkgul' => '#fdc300',
+    'kyrkblå' => '#006fb9',
+
+    'ljuskyrkröd' => '#ed6d91',
+    'ljuskyrklila' => '#bb71ac',
+    'ljuskyrkgrön' => '#afca0b',
+    'ljuskyrkgul' => '#ffdf43',
+    'ljuskyrkblå' => '#63c3d1',
+
+    'ljusastkyrkröd' => '#f5b3bd',
+    'ljusastkyrklila' => '#d1bcdc',
+    'ljusastkyrkgrön' => '#dddf4b',
+    'ljusastkyrkgul' => '#ffe37e',
+    'ljusastkyrkblå' => '#bee2e9'
 
 ## Exempel på länkar
 
@@ -61,9 +81,9 @@ Som standard används den mörkröda färgen från Svenska kyrkans grafiska prof
 
 Observera att webbläsaren antagligen lägger till ``%20`` istället för mellanslag, men du kan behöva göra det själv.
 
-### Visa kalendern för aktiviteter i Säbrå kyrka med kyrklila färger
+### Visa kalendern för aktiviteter i Säbrå kyrka med mörkkyrklila färger
 
-``https://kalender.minserver.se/?orgID=20271&locationID=26a876d9-3cf6-4a8b-8e11-7c78eaaef4d9&color=kyrklila``
+``https://kalender.minserver.se/?orgID=20271&locationID=26a876d9-3cf6-4a8b-8e11-7c78eaaef4d9&color=mörkkyrklila``
 
 
 ## Lägg in kalendern i Playipp
