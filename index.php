@@ -21,6 +21,8 @@
         $organisation_namn = 'Svenska kyrkan'; //Default organisation
         $webbsida_rubrik = 'Svenska kyrkan'; //Default rubrik
         $max_handelser = '50'; //Max antal händelser att visa i kalendern
+	$skrolla = '0'; //Skroll är inaktiverat per default
+	$skroll_status = ''; //Tom som standard
 
         $location_id = '';
         $location_name = '';
@@ -90,6 +92,17 @@
                 }
         }
 
+	//Möjlighet att sätta eget antal händelser att ladda
+        if (isset($_GET['antal']) && is_numeric($_GET['antal']) && $_GET['antal'] > '0' && $_GET['antal'] < '100') {
+        	$max_handelser = $_GET['antal'];
+        }
+		
+	//Möjlighet att aktivera skroll på webbsidan
+	if (isset($_GET['skrolla'])) {
+            $skrolla = '1';
+		$skroll_status = ' class="skrolla"';
+        }
+	
         //Börja med att starta en session
         session_start();
 
@@ -279,7 +292,7 @@
                         }
                 </style>
 	</head>
-	<body>
+	<body<?php echo $skroll_status; ?>>
 
 			<div id="header">
 					<?php 
@@ -292,13 +305,13 @@
                                         ?>
 			</div>
 
-			<div id="wrapper">
+			<div id="wrapper"<?php echo $skroll_status; ?>>
 
 					<?php echo $kalender; ?>
 
 			</div>
 
-			<div id="gradient"></div>
+			<?php  if ($skrolla == '0') { echo '<div id="gradient"></div>'; } ?>
 
 	</body>
 </html>
