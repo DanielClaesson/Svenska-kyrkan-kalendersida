@@ -29,8 +29,6 @@ div {
 }
 
 body {
-	width: 100vw;
-	height: 100vh;
 	position: relative;
 	overflow: hidden;
 	margin: 0;
@@ -71,6 +69,11 @@ body {
 	overflow: hidden;
 	padding: 0 15px 5px 15px;
 	font-family: 'Book', arial, sans-serif;
+}
+
+.skrolla {
+	height: auto!important;
+	overflow: visible!important;
 }
 
 .datum {
