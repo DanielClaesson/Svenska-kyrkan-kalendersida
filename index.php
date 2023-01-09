@@ -26,6 +26,7 @@
 
         $location_id = '';
         $location_name = '';
+        $sluttider = '1';
 
         // Färger hämtade från Svenska kyrkans grafiska profil
         // https://www.svenskakyrkan.se/grafiskprofil
@@ -63,15 +64,17 @@
                 //Ta bort allt förutom siffror och kommatecken från ID:et
                 $organisations_id = preg_replace("/[^0-9,]/", "", $organisations_id);
         }
+		elseif (isset ($_GET['organisationsid']) && $_GET['organisationsid'] !== '') {
+			$organisations_id = $_GET['organisationsid'];
+			//Ta bort allt förutom siffror och kommatecken från ID:et
+			$organisations_id =preg_replace("/[^0-9,]/", "", $organisations_id);
+		}
 
         //Möjlighet att filtrera aktiviteter per locationID
-        /*
-                Härnösands domkyrka = 5dab016f-18f3-4973-92d8-69779653a1ef
-                Säbrå kyrka = 26a876d9-3cf6-4a8b-8e11-7c78eaaef4d9
-        */
         if (isset($_GET['locationID']) && $_GET['locationID'] !== '') {
                 $location_id = $_GET['locationID'];
         }
+		
 
         //Möjlighet att sätta Title via parameter ?orgName=Svenska kyrkan Härnösand
         if (isset($_GET['orgName']) && $_GET['orgName'] !== '') {
@@ -91,18 +94,25 @@
                         $color = $colors['kyrkröd'];
                 }
         }
-
-	//Möjlighet att sätta eget antal händelser att ladda
+		
+		//Möjlighet att sätta eget antal händelser att ladda
         if (isset($_GET['antal']) && is_numeric($_GET['antal']) && $_GET['antal'] > '0' && $_GET['antal'] < '100') {
-        	$max_handelser = $_GET['antal'];
+            $max_handelser = $_GET['antal'];
         }
 		
-	//Möjlighet att aktivera skroll på webbsidan
-	if (isset($_GET['skrolla'])) {
+		//Möjlighet att aktivera skroll på webbsidan
+		if (isset($_GET['skrolla'])) {
             $skrolla = '1';
-		$skroll_status = ' class="skrolla"';
+			$skroll_status = ' class="skrolla"';
         }
-	
+		
+		//Möjlighet att ta bort alla sluttider
+		if (isset($_GET['sluttider']) && $_GET['sluttider'] == 'nej') {
+            $sluttider = '0';
+        }
+		
+		echo '<!-- Sluttider status: '.$sluttider.' -->';
+		
         //Börja med att starta en session
         session_start();
 
@@ -181,18 +191,27 @@
                                         $slutdatum = str_replace(array('-'), array(''), $slutdatum);
                                         //Byt kolon mot punkt i starttiden
                                         $starttid = str_replace(array(':', ' '), array('.', ''), $starttid);
+										
 
-                                        //Om det finns en sluttid
+										
+                                        //Om det finns en sluttid och sluttider ska visas
                                         if (strpos($starttid, '-') !== false) {
-                                                $starttid_ratt = strtok($starttid, '-');
+                                                $starttid = str_replace(array(' '), array(''), $starttid);
+												$starttid_ratt = strtok($starttid, '-');
                                                 $sluttid = str_replace(array($starttid_ratt.'-'), array(''), $starttid);
                                                 $sluta_visas = $sluttid;
                                                 $sluttid = '-'.$sluttid;
                                                 $starttid = $starttid_ratt;
+												//Om sluttider inte ska visas
+												if ($sluttider == '0') {
+													$sluttid = '';
+												}
+												echo '<!-- Sluttid: '.$sluttid.' -->';
                                         }
                                         else {
                                                 $sluttid = '';
                                                 $sluta_visas = date($starttid, strtotime('+2 hours'));
+												echo '<!-- Ingen sluttid gäller, starttiden är '.$starttid.' -->';
                                         }
 
                                         //Om aktiviteten inte är passerad
@@ -274,22 +293,22 @@
 
 			<title>Kalender för <?php echo $organisation_namn; ?></title>
 
-			<link rel="stylesheet" type="text/css" href="/style.css" media="all" />
+			<link rel="stylesheet" type="text/css" href="<?php echo $website_url; ?>style.css" media="all" />
 
 			<!-- fix för mobiler -->
 		<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
                 <style>
-                        #header {
-                                <?php 
-                                echo("background: ".$color.";");
-                                ?>
-                        }
+					#header {
+							<?php 
+							echo("background: ".$color.";");
+							?>
+					}
 
-                        .datum {
-                                <?php 
-                                echo("color: ".$color.";");
-                                ?>
-                        }
+					.datum {
+							<?php 
+							echo("color: ".$color.";");
+							?>
+					}
                 </style>
 	</head>
 	<body<?php echo $skroll_status; ?>>
@@ -297,17 +316,17 @@
 			<div id="header">
 					<?php 
                                         
-                                        echo('<h1>'.$webbsida_rubrik.'</h1>');
-                                        if ($location_id !== '') {
-                                                echo('<h1 class="location">'.$location_name.'</h1>');
-                                        }
+					echo('<h1>'.$webbsida_rubrik.'</h1>');
+					if ($location_id !== '') {
+							echo('<h1 class="location">'.$location_name.'</h1>');
+					}
 
-                                        ?>
+					?>
 			</div>
 
 			<div id="wrapper"<?php echo $skroll_status; ?>>
 
-					<?php echo $kalender; ?>
+				<?php echo $kalender; ?>
 
 			</div>
 
