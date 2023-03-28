@@ -26,6 +26,9 @@
 
         $location_id = '';
         $location_name = '';
+        
+        $calendarSubGroup = ''; //Händelsetyp ID
+
         $sluttider = '1';
 
         // Färger hämtade från Svenska kyrkans grafiska profil
@@ -64,15 +67,30 @@
                 //Ta bort allt förutom siffror och kommatecken från ID:et
                 $organisations_id = preg_replace("/[^0-9,]/", "", $organisations_id);
         }
-		elseif (isset ($_GET['organisationsid']) && $_GET['organisationsid'] !== '') {
-			$organisations_id = $_GET['organisationsid'];
-			//Ta bort allt förutom siffror och kommatecken från ID:et
-			$organisations_id =preg_replace("/[^0-9,]/", "", $organisations_id);
-		}
+        elseif (isset ($_GET['organisationsid']) && $_GET['organisationsid'] !== '') {
+                $organisations_id = $_GET['organisationsid'];
+                //Ta bort allt förutom siffror och kommatecken från ID:et
+                $organisations_id =preg_replace("/[^0-9,]/", "", $organisations_id);
+        }
 
         //Möjlighet att filtrera aktiviteter per locationID
         if (isset($_GET['locationID']) && $_GET['locationID'] !== '') {
                 $location_id = $_GET['locationID'];
+        }
+
+        //Filtrering via namn på Händelsetyp
+        // 101 = Gudstjänst & mässa
+        // 102 = ?
+        // 103 = Kropp & själ
+        // 104 = Barnverksamhet
+        // 105 = Musik & kör
+        // 106 = ?
+        // 107 = ?
+        // 108 = Studier & samtal
+        // 110 = Ungdomsverksamhet
+        // 111 = Drop-in
+        if (isset($_GET['csg']) && $_GET['csg'] !== '') {
+                $calendarSubGroup = explode(',', $_GET['csg']); //Hantera flera Händelsetyper för or-filtrering i api:t
         }
 		
 
@@ -95,23 +113,23 @@
                 }
         }
 		
-		//Möjlighet att sätta eget antal händelser att ladda
+        //Möjlighet att sätta eget antal händelser att ladda
         if (isset($_GET['antal']) && is_numeric($_GET['antal']) && $_GET['antal'] > '0' && $_GET['antal'] < '100') {
             $max_handelser = $_GET['antal'];
         }
 		
-		//Möjlighet att aktivera skroll på webbsidan
-		if (isset($_GET['skrolla'])) {
+        //Möjlighet att aktivera skroll på webbsidan
+	if (isset($_GET['skrolla'])) {
             $skrolla = '1';
 			$skroll_status = ' class="skrolla"';
         }
 		
-		//Möjlighet att ta bort alla sluttider
-		if (isset($_GET['sluttider']) && $_GET['sluttider'] == 'nej') {
+        //Möjlighet att ta bort alla sluttider
+        if (isset($_GET['sluttider']) && $_GET['sluttider'] == 'nej') {
             $sluttider = '0';
         }
 		
-		echo '<!-- Sluttider status: '.$sluttider.' -->';
+		//echo '<!-- Sluttider status: '.$sluttider.' -->';
 		
         //Börja med att starta en session
         session_start();
@@ -142,10 +160,37 @@
         $antal_tillagda = '0';
 
         //Länk till kalenderdatan
-        $url = 'https://api.svenskakyrkan.se/calendarsearch/v4/SearchByParent?apikey='.$api_nyckel.'&orgid='.$organisations_id.'&$orderby=StartTime';
+        $url = 'https://api.svenskakyrkan.se/calendarsearch/v4/SearchByParent?apikey='.$api_nyckel.'&orgId='.$organisations_id.'&$orderby=StartTime';
         if ($location_id !== '') { //Låt API:t filtrera location_id om vi filtrerar på ett sådant.
+                // %20 = space
+                // %27 = '
                 $url .= '&$filter=Place/Id%20eq%20%27'.$location_id.'%27';
+
+                if ($calendarSubGroup != '') { //Vi filtrerar på både plats och händelsetyp.
+                        $url .= '%20and%20CalendarSubGroups/any(n:n/Id%20eq%20';
+
+                        for($i = 0; $i < count($calendarSubGroup); $i++) {
+                                if($i > 0) {
+                                        $url .= '%20or%20n/Id%20eq%20';
+                                }
+                                $url .= $calendarSubGroup[$i];
+                        }
+                        $url .= ')';
+                }
         }
+        elseif ($location_id == '' && $calendarSubGroup != ''){ //Vi filtrerar inte på plats, men på händelsetyp.
+                $url .= '&$filter=CalendarSubGroups/any(n:n/Id%20eq%20';
+
+                for($i = 0; $i < count($calendarSubGroup); $i++) {
+                        if($i > 0) {
+                                $url .= '%20or%20n/Id%20eq%20';
+                        }
+                        $url .= $calendarSubGroup[$i];
+                }
+                $url .= ')';
+        }
+
+        //echo $url;
 
         $kalender_api_lank = file_get_contents($url);
 
@@ -156,6 +201,8 @@
         else {
                 //Gör om JSON till en array
                 $svk_kalender_array = json_decode ($kalender_api_lank, true);
+
+                //echo '<pre>'; print_r($svk_kalender_array); echo '</pre>';
 
                 //Antal aktiviteter i kalendern
                 $antal_aktiviteter  = count($svk_kalender_array['value']);
@@ -191,7 +238,6 @@
                                         $slutdatum = str_replace(array('-'), array(''), $slutdatum);
                                         //Byt kolon mot punkt i starttiden
                                         $starttid = str_replace(array(':', ' '), array('.', ''), $starttid);
-										
 
 										
                                         //Om det finns en sluttid och sluttider ska visas
@@ -206,12 +252,12 @@
 												if ($sluttider == '0') {
 													$sluttid = '';
 												}
-												echo '<!-- Sluttid: '.$sluttid.' -->';
+												//echo '<!-- Sluttid: '.$sluttid.' -->';
                                         }
                                         else {
                                                 $sluttid = '';
                                                 $sluta_visas = date($starttid, strtotime('+2 hours'));
-												echo '<!-- Ingen sluttid gäller, starttiden är '.$starttid.' -->';
+												//echo '<!-- Ingen sluttid gäller, starttiden är '.$starttid.' -->';
                                         }
 
                                         //Om aktiviteten inte är passerad
@@ -293,7 +339,7 @@
 
 			<title>Kalender för <?php echo $organisation_namn; ?></title>
 
-			<link rel="stylesheet" type="text/css" href="<?php echo $website_url; ?>style.css" media="all" />
+			<link rel="stylesheet" type="text/css" href="style.css" media="all" />
 
 			<!-- fix för mobiler -->
 		<meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
