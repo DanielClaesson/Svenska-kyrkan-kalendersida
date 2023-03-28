@@ -80,13 +80,14 @@
 
         //Filtrering via namn på Händelsetyp
         // 101 = Gudstjänst & mässa
-        // 102 = ?
+        // 102 = Mötas & umgås
         // 103 = Kropp & själ
         // 104 = Barnverksamhet
         // 105 = Musik & kör
-        // 106 = ?
-        // 107 = ?
+        // 106 = Stöd & omsorg
+        // 107 = Konst& kultur
         // 108 = Studier & samtal
+        // 109 = Skapande och kreativitet
         // 110 = Ungdomsverksamhet
         // 111 = Drop-in
         if (isset($_GET['csg']) && $_GET['csg'] !== '') {
