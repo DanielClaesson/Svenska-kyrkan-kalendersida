@@ -34,6 +34,24 @@ ID:t skickar du med i länken med parametern ``locationID=``
 
 När du filterar aktiviteten baserat på en plats så är det onödigt att platsen skrivs ut efter varje aktivitetstitel. Platsen läggs istället in i "headern" längst till höger. Namnet hämtas från platsadministrationen..
 
+### Händelsetyp
+Aktiviteterna kan också filtreras baserat på händelsetyp, detta åstadkoms genom att använda parametern ``csg=`` och ID:t för händelsetypen
+
+Det går att skicka med godtyckligt antal händelsetyper, dessa seperaras med ett kommatecken ``,`` . Filtreringen är en s.k. "eller"-filtrering och tar med de aktiviteter som har t.ex. ID 101 *eller* 105 i fallet ``csg=101,105``.
+
+Här är en lista på händelsetyper och deras ID:n
+
+> 101 = Gudstjänst & mässa
+> 102 = ?
+> 103 = Kropp & själ
+> 104 = Barnverksamhet
+> 105 = Musik & kör
+> 106 = ?
+> 107 = ?
+> 108 = Studier & samtal
+> 110 = Ungdomsverksamhet
+> 111 = Drop-in
+
 ### Rubrik och \<title>
 Rubriken som visas är som standard Svenska kyrkan, men detta kan du själv ställa om med parametern ``header=``, dit du t.ex. kan fylla i ert enhets namn , ex. ``Svenska kyrkan Härnösand``.
 
@@ -84,6 +102,14 @@ Observera att webbläsaren antagligen lägger till ``%20`` istället för mellan
 ### Visa kalendern för aktiviteter i Säbrå kyrka med mörkkyrklila färger
 
 ``https://kalender.minserver.se/?orgID=20271&locationID=26a876d9-3cf6-4a8b-8e11-7c78eaaef4d9&color=mörkkyrklila``
+
+### Visa kalendern för aktiviteter av händelsetypen Gudstjänst & mässa i Härnösands pastorat
+
+``https://kalender.minserver.se/?orgID=20271&csg=101``
+
+### Visa kalendern för aktiviteter av händelsetypen Gudstjänst & mässa, samt Musik & kör i Härnösands pastorat
+
+``https://kalender.minserver.se/?orgID=20271&csg=101,105``
 
 
 ## Lägg in kalendern i Playipp
