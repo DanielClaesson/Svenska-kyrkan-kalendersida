@@ -27,9 +27,10 @@ OrganisationsID:t skickar du med som parametern ``orgID=`` till länken, se exem
 Aktiviteterna kan också filtreras baserat på vilken lokal de äger rum i, detta åstadkoms genom att skicka med platsens ID som återfinns i platsadministrationen.
 
 **Exempel på IDn:**
-> Härnösands domkyrka = 5dab016f-18f3-4973-92d8-69779653a1ef
-> Säbrå kyrka = 26a876d9-3cf6-4a8b-8e11-7c78eaaef4d9
-
+```
+Härnösands domkyrka = 5dab016f-18f3-4973-92d8-69779653a1ef
+Säbrå kyrka = 26a876d9-3cf6-4a8b-8e11-7c78eaaef4d9
+```
 ID:t skickar du med i länken med parametern ``locationID=``
 
 När du filterar aktiviteten baserat på en plats så är det onödigt att platsen skrivs ut efter varje aktivitetstitel. Platsen läggs istället in i "headern" längst till höger. Namnet hämtas från platsadministrationen..
@@ -40,18 +41,19 @@ Aktiviteterna kan också filtreras baserat på händelsetyp, detta åstadkoms ge
 Det går att skicka med godtyckligt antal händelsetyper, dessa seperaras med ett kommatecken ``,`` . Filtreringen är en s.k. "eller"-filtrering och tar med de aktiviteter som har t.ex. ID 101 *eller* 105 i fallet ``csg=101,105``.
 
 Här är en lista på händelsetyper och deras ID:n
-
-> 101 = Gudstjänst & mässa
-> 102 = ?
-> 103 = Kropp & själ
-> 104 = Barnverksamhet
-> 105 = Musik & kör
-> 106 = ?
-> 107 = ?
-> 108 = Studier & samtal
-> 110 = Ungdomsverksamhet
-> 111 = Drop-in
-
+```
+101 = Gudstjänst & mässa
+102 = Mötas & umgås
+103 = Kropp & själ
+104 = Barnverksamhet
+105 = Musik & kör
+106 = Stöd & omsorg
+107 = Konst& kultur
+108 = Studier & samtal
+109 = Skapande och kreativitet
+110 = Ungdomsverksamhet
+111 = Drop-in
+```
 ### Rubrik och \<title>
 Rubriken som visas är som standard Svenska kyrkan, men detta kan du själv ställa om med parametern ``header=``, dit du t.ex. kan fylla i ert enhets namn , ex. ``Svenska kyrkan Härnösand``.
 
