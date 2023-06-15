@@ -117,7 +117,7 @@ Observera att webbläsaren antagligen lägger till ``%20`` istället för mellan
 ## Lägg in kalendern i Playipp
 Många församlingar har digitala skärmar med mjukvara från Playipp. Kalendern kan enkelt läggas in på dessa skärmar.
 
-1. Gå till som vanligt först Publicera och välj den skärm du vill använda. Klicka på den modul/sektion av skärmen där du vill ha kalendern och välj sedan Lägg till.
-2. Under Ny media & fil väljer du Webblänk. Klistra in kalenderadressen (inkl. ert ID-nummer) i det översta textfältet. Ändra därefter gärna från Ladda om länken vid varje visning till Ange tidsintervall för omladdning av länken och låt det stå 60 minuter i rutan intill. Tryck sedan på Nästa steg.  
+1. Gå som vanligt först till **Publicera** och välj den skärm du vill använda. Klicka på den modul/sektion av skärmen där du vill ha kalendern och välj sedan Lägg till.
+2. Under Ny media & fil väljer du **Webblänk**. Klistra in kalenderadressen (inkl. ert ID-nummer) i det översta textfältet. Ändra därefter gärna från Ladda om länken vid varje visning till Ange tidsintervall för omladdning av länken och låt det stå 60 minuter i rutan intill. Tryck sedan på Nästa steg.  
 3. Ge nu kalendern ett namn och välj hur länge den ska visas. Välj också en mapp där den ska sparas (i Playipp). Tryck sedan en gång till på Nästa steg.
 4. Till sist väljer du en schemaläggning för när kalendern ska visas. Avsluta med att trycka på Publicera.
