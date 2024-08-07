@@ -1,6 +1,5 @@
 <?php
         $api_nyckel = '';
-		$url_webbsida = 'https://botkyrkaforsamling.se/kalendersida/';
 
         // Lägg api-nyckeln som text i en fil du döper till api och lägger jämte index.php
         // OBS VIKTIGT! Se till i webbserverns inställningar att filen inte exponeras på internet! (.htaccess m.m.)
