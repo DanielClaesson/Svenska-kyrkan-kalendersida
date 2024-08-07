@@ -8,7 +8,7 @@ Har du tillgång till en PHP-server så kan du ladda upp filerna där, det är a
 ### Ställa in kalendern för att visa rätt aktiviteter
 
 #### API-nyckel
-Du behöver en API-nyckel för att hämta kalenderaktivteter. Det kan du skaffa på api.svenskakyrkan.se. 
+Du behöver en API-nyckel för att hämta kalenderaktivteter. Det kan du skaffa på ``https://svk-apim-prod.developer.azure-api.net/``. 
 
 API-nyckeln kan du ange på två sätt.
 
