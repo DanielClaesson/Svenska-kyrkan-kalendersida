@@ -255,6 +255,13 @@
 
 							if ($location_id !== '') {
 									$location_name = $plats;
+									
+									if (isset($_GET['header']) && $_GET['header'] !== '') {
+											$webbsida_rubrik = $_GET['header']. ' '.$plats;
+									}
+									else {
+										$webbsida_rubrik = $plats;
+									}
 							}
 
 							//Om det inte redan har lagts till max antal aktiviteter i kalendern
@@ -370,14 +377,7 @@
 	<body<?php echo $skroll_status; ?>>
 
 		<div id="header">
-				<?php 
-									
-				echo('<h1>'.$webbsida_rubrik.'</h1>');
-				if ($location_id !== '') {
-						echo('<h1 class="location">'.$location_name.'</h1>');
-				}
-
-				?>
+			<?php echo('<h1>'.$webbsida_rubrik.'</h1>'); ?>
 		</div>
 
 		<div id="wrapper"<?php echo $skroll_status; ?>>
