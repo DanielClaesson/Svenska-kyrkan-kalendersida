@@ -36,82 +36,34 @@ ID:t skickar du med i länken med parametern ``locationID=``
 När du filterar aktiviteten baserat på en plats så är det onödigt att platsen skrivs ut efter varje aktivitetstitel. Platsen läggs istället in i "headern" längst till höger. Namnet hämtas från platsadministrationen..
 
 ### Händelsetyp
-Aktiviteterna kan också filtreras baserat på händelsetyp, detta åstadkoms genom att använda parametern ``csg=`` och ID:t för händelsetypen
+Det är för närvarande inte möjligt att filtrera aktiviteter med hjälp av händelsetyper.
 
-Det går att skicka med godtyckligt antal händelsetyper, dessa seperaras med ett kommatecken ``,`` . Filtreringen är en s.k. "eller"-filtrering och tar med de aktiviteter som har t.ex. ID 101 *eller* 105 i fallet ``csg=101,105``.
-
-Här är en lista på händelsetyper och deras ID:n
-```
-101 = Gudstjänst & mässa
-102 = Mötas & umgås
-103 = Kropp & själ
-104 = Barnverksamhet
-105 = Musik & kör
-106 = Stöd & omsorg
-107 = Konst& kultur
-108 = Studier & samtal
-109 = Skapande och kreativitet
-110 = Ungdomsverksamhet
-111 = Drop-in
-```
 ### Rubrik och \<title>
 Rubriken som visas är som standard Svenska kyrkan, men detta kan du själv ställa om med parametern ``header=``, dit du t.ex. kan fylla i ert enhets namn , ex. ``Svenska kyrkan Härnösand``.
 
 Själva titeln i webbläsaren visar ``Kalender för [Svenska kyrkan]`` som standard, denna kan du också styra via parametern ``orgName=``.
 
 ### Färg
-Som standard används den mörkröda färgen från Svenska kyrkans grafiska profil, men du kan ändra via parametern ``color=`` till andra färger enligt listan nedan:
-
-    'mörkkyrkröd' => '#91160f',
-    'mörkkyrklila' => '#522583',
-    'mörkkyrkgrön' => '#4a6a21',
-    'mörkkyrkgul' => '#f59c00',
-    'mörkkyrkblå' => '#005884',
-
-    'kyrkröd' => '#d51317',
-    'kyrklila' => '#a71680',
-    'kyrkgrön' => '#6b9531',
-    'kyrkgul' => '#fdc300',
-    'kyrkblå' => '#006fb9',
-
-    'ljuskyrkröd' => '#ed6d91',
-    'ljuskyrklila' => '#bb71ac',
-    'ljuskyrkgrön' => '#afca0b',
-    'ljuskyrkgul' => '#ffdf43',
-    'ljuskyrkblå' => '#63c3d1',
-
-    'ljusastkyrkröd' => '#f5b3bd',
-    'ljusastkyrklila' => '#d1bcdc',
-    'ljusastkyrkgrön' => '#dddf4b',
-    'ljusastkyrkgul' => '#ffe37e',
-    'ljusastkyrkblå' => '#bee2e9'
+Som standard används den vinröda färgen från Svenska kyrkans grafiska profil som bakgrund till rubriken, men du kan ändra till lila eller grön bakgrundsfär via parametern ``color=lila`` eller ``color=grön``
 
 ## Exempel på länkar
 
 ### Visa kalendern för alla aktiviteter i Härnösands pastorat
-``https://kalender.minserver.se/?orgID=20271``
+``https://kalender.minserver.se/?orgID=2020%2C20271%2C20270%2C2025%2C2023%2C2024%2C7640%2C2022%2C2026``
 
 ### Visa kalendern för aktiviteter i Härnösands domkyrka
 
-``https://kalender.minserver.se/?orgID=20271&locationID=5dab016f-18f3-4973-92d8-69779653a1ef``
+``https://kalender.minserver.se/?orgID=2020%2C20271%2C20270%2C2025%2C2023%2C2024%2C7640%2C2022%2C2026&locationID=5dab016f-18f3-4973-92d8-69779653a1ef``
 
 ### Visa kalendern för aktiviteter i Härnösands pastorat samt rubriken Svenska kyrkan Härnösand och titeln i webbläsaren "Härnösands pastorat"
 
-``https://kalender.minserver.se/?orgID=20271&header=Svenska kyrkan Härnösand&orgName=Härnösands pastorat``
+``https://kalender.minserver.se/?orgID=2020%2C20271%2C20270%2C2025%2C2023%2C2024%2C7640%2C2022%2C2026&header=Svenska kyrkan Härnösand&orgName=Härnösands pastorat``
 
 Observera att webbläsaren antagligen lägger till ``%20`` istället för mellanslag, men du kan behöva göra det själv.
 
-### Visa kalendern för aktiviteter i Säbrå kyrka med mörkkyrklila färger
+### Visa kalendern för aktiviteter i Säbrå kyrka med lila bakgrundsfärg till rubrikten
 
-``https://kalender.minserver.se/?orgID=20271&locationID=26a876d9-3cf6-4a8b-8e11-7c78eaaef4d9&color=mörkkyrklila``
-
-### Visa kalendern för aktiviteter av händelsetypen Gudstjänst & mässa i Härnösands pastorat
-
-``https://kalender.minserver.se/?orgID=20271&csg=101``
-
-### Visa kalendern för aktiviteter av händelsetypen Gudstjänst & mässa, samt Musik & kör i Härnösands pastorat
-
-``https://kalender.minserver.se/?orgID=20271&csg=101,105``
+``https://kalender.minserver.se/?orgID=2020%2C20271%2C20270%2C2025%2C2023%2C2024%2C7640%2C2022%2C2026&locationID=26a876d9-3cf6-4a8b-8e11-7c78eaaef4d9&color=lila``
 
 
 ## Lägg in kalendern i Playipp
