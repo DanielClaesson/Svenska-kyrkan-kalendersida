@@ -1,26 +1,27 @@
 @charset "utf-8";
 /* CSS Document */
 
-/* Importera Svenska kyrkans teckensnitt Foundry Sterling */
+/* Importera Svenska kyrkans teckensnitt */
 @font-face {
-	font-family: 'Light';
-	src: url('fonts/light.ttf');
+	font-family: 'DM-regular';
+	src: url('fonts/dmsans_regular.ttf');
 }
 @font-face {
-	font-family: 'Book';
-	src: url('fonts/book.ttf');
+	font-family: 'DM-medium';
+	src: url('fonts/dmsans_medium.ttf');
 }
 @font-face {
-	font-family: 'Book-italic';
-	src: url('fonts/book-italic.ttf');
+	font-family: 'DM-bold';
+	src: url('fonts/dmsans_bold.ttf');
 }
 @font-face {
-	font-family: 'Demi';
-	src: url('fonts/demi.ttf');
+	font-family: 'Spectral-italic';
+	src: url('fonts/spectral_italic.ttf');
 }
-@font-face {
-	font-family: 'Bold';
-	src: url('fonts/bold.ttf');
+
+/* HTML 5-fix för äldre webbläsare */
+header, nav, article, aside, section, footer {
+	display: block;
 }
 
 div {
@@ -29,13 +30,15 @@ div {
 }
 
 body {
+	/*width: 100vw;
+	height: 100vh;*/
 	position: relative;
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
-	background: #fff;
+	background: #FFEBE1;
 	color: #000;
-	font-family: 'Book', arial, sans-serif;
+	font-family: 'DM-regular', arial, sans-serif;
 	font-size: 18px;
 	line-height: 110%;
 	text-align: left;
@@ -51,7 +54,7 @@ body {
 }
 
 #header h1 {
-	margin: 10px;
+	margin: 10px 10px 10px 0;
 	padding: 15px;
 	font-size: 33px;
 	font-weight: normal;
@@ -64,11 +67,11 @@ body {
 
 #wrapper {
 	position: relative;
-	width: 100%;
+	/*width: 100%;*/
 	height: calc(100% - 60px);
 	overflow: hidden;
 	padding: 0 15px 5px 15px;
-	font-family: 'Book', arial, sans-serif;
+	font-family: 'DM-regular', arial, sans-serif;
 }
 
 .skrolla {
@@ -79,15 +82,15 @@ body {
 .datum {
 	margin: 15px 0 5px 0;
 	padding: 5px 0 0 0;
-	color: #d51317;
-	border-top: 1px solid #e8e8e8;
+	color: #000;
+	/*border-top: 1px solid #e8e8e8;*/
 }
 
 .datum h2 {
-	margin: 0;
-	font-size: 24px;
-	text-transform: uppercase;
-	font-family: 'Bold', arial, sans-serif;
+	margin: 0 0 10px 0;
+	font-size: 22px;
+	/*text-transform: uppercase;*/
+	font-family: 'DM-bold', arial, sans-serif;
 	font-weight: normal;
 }
 
@@ -99,13 +102,17 @@ body {
 	margin: 0;
 }
 
+.plats {
+	font-family: 'Spectral-italic', arial, sans-serif;
+	font-size: 19px;
+}
+
 .infotext {
-	font-family: 'Book-italic', arial, sans-serif;
 	font-size: 16px;
 }
 
 .fet {
-	font-family: 'Bold', arial, sans-serif;
+	font-family: 'DM-medium', arial, sans-serif;
 }
 
 #gradient {
