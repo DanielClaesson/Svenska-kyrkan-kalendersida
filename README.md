@@ -36,7 +36,18 @@ ID:t skickar du med i länken med parametern ``locationID=``
 När du filterar aktiviteten baserat på en plats så är det onödigt att platsen skrivs ut efter varje aktivitetstitel. Platsen läggs istället in i "headern" längst till höger. Namnet hämtas från platsadministrationen..
 
 ### Händelsetyp
-Det är för närvarande inte möjligt att filtrera aktiviteter med hjälp av händelsetyper.
+Nu är det även möjligt att filtrera på händelsetyp med parametern ``handelsetyp=``. Vill du filtrera på flera händelsetyper ska de separeras med kommatecken (inget mellanslag). Följande händelsetyper går att använda:
+Gudstjänst och mässa: ``gudstjanstOchMassa``
+Mötas om umgås: ``motasOchUmgas``
+Barnverksamhet: ``barnverksamhet``
+Kropp och själ: ``kroppOchSjal``
+Musik och kör: ``musikOchKor``
+Stöd och omsorg: ``stodOchOmsorg``
+Konst och kultur: ``konstOchKultur``
+Drop in: ``dropIn``
+Ungdomsverksamhet: ``ungdomsverksamhet``
+Skapande och kreativitet: ``skapandeOchKreativitet``
+Stutider och samtal: ``studierOchSamtal``
 
 ### Rubrik och \<title>
 Rubriken som visas är som standard Svenska kyrkan, men detta kan du själv ställa om med parametern ``header=``, dit du t.ex. kan fylla i ert enhets namn , ex. ``Svenska kyrkan Härnösand``.
