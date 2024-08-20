@@ -26,6 +26,7 @@
 
         $location_id = '';
         $location_name = '';
+        $handelsetyp = '';
         
         $calendarSubGroup = ''; //Händelsetyp ID
 
@@ -76,6 +77,12 @@
         if (isset($_GET['csg']) && $_GET['csg'] !== '') {
                 $calendarSubGroup = explode(',', $_GET['csg']); //Hantera flera Händelsetyper för or-filtrering i api:t
         }
+		
+		//Möjlighet att filtrera aktiviteter på händelsetyp
+		if (isset($_GET['handelsetyp']) && $_GET['handelsetyp'] !== '') {
+                $handelsetyp = $_GET['handelsetyp'];
+        }
+		
 		
         //Möjlighet att sätta Title via parameter (Exempel: ?orgName=Svenska kyrkan Härnösand)
         if (isset($_GET['orgName']) && $_GET['orgName'] !== '') {
@@ -159,6 +166,11 @@
 			// %20 = space
 			// %27 = '
 			$url .= '&place_id='.$location_id;
+        }
+		
+		//Låt API:t filtrera på händelsetyper, om detta finns
+		if ($handelsetyp !== '') {
+			$url .= '&is='.$handelsetyp;
         }
 
         $kalender_api_lank = file_get_contents($url);
@@ -377,7 +389,7 @@
 	<body<?php echo $skroll_status; ?>>
 
 		<div id="header">
-			<?php echo('<h1>'.$webbsida_rubrik.'</h1>'); ?>
+				<?php echo('<h1>'.$webbsida_rubrik.'</h1>'); ?>
 		</div>
 
 		<div id="wrapper"<?php echo $skroll_status; ?>>
